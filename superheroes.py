@@ -1,4 +1,5 @@
-import random
+from random import randint
+
 
 class Ability:
     def __init__(self, name, attack_strength):
@@ -10,7 +11,7 @@ class Ability:
         lowest = int(self.attack_strength) // 2
         # Use random.randint(a, b) to select a random attack value.
         highest = int(self.attack_strength)
-        attack_val = random.randint(lowest, highest)
+        attack_val = randint(lowest, highest)
         # Return attack value between 0 and the full attack.
         return attack_val
 
@@ -24,12 +25,12 @@ class Hero:
         print(self.deaths)
 
         if self.deaths > 0:
-            print(self.kills // self.deaths)
+            print(int(self.kills) // int(self.deaths))
 
         else:
-            print(self.kills)
+            print(int(self.kills))
 
-    def __init__(self, name, health=100):
+    def __init__(self, name, health=100): cccccccccccccccc
         self.abilities = list()
         self.name = name
         self.armors = list()
@@ -42,7 +43,6 @@ class Hero:
     def defend(self):
         """
         This method should run the defend method on each piece of armor and calculate the total defense. 
-
         If the hero's health is 0, the hero is out of play and should return 0 defense points.
         """
         total = 0
@@ -59,7 +59,6 @@ class Hero:
         """
         This method should subtract the damage amount from the 
         hero's health. 
-
         If the hero dies update number of deaths.
         """
         if self.health > 0:
@@ -92,7 +91,7 @@ class Hero:
         total = 0
         
         for ability in self.abilities:
-            total += int(ability.attack())
+            total += ability.attack()
 
         return total
     # Add up and return the total of all attacks
@@ -102,7 +101,7 @@ class Weapon(Ability):
     def attack(self):
         lowest = 0
         highest = self.attack_strength
-        attack_val = random.randint(lowest, highest)
+        attack_val = randint(lowest, highest)
         # Return attack value between 0 and the full attack.
         return attack_val
 
@@ -147,13 +146,12 @@ class Team():
     def attack(self, other_team):
         """
         This method should total our teams attack strength and call the defend() method on the rival team that is passed in.
-
         It should call add_kill() on each hero with the number of kills made.
         """
         team_attack = 0
 
         for hero in self.heroes:
-            team_attack += int(hero.attack())
+            team_attack += hero.attack()
         
         kills = other_team.defend(team_attack)
 
@@ -166,7 +164,6 @@ class Team():
         """
         This method should calculate our team's total defense.
         Any damage in excess of our team's total defense should be evenly distributed amongst all heroes with the deal_damage() method.
-
         Return number of heroes killed in attack.
         """
         team_defense = 0
@@ -209,7 +206,6 @@ class Team():
     def stats(self):
         """
         This method should print the ratio of kills/deaths for each member of the team to the screen. 
-
         This data must be output to the terminal.
         """
         for hero in self.heroes:
@@ -231,7 +227,7 @@ class Armor:
         Return a random value between 0 and the 
         initialized defend strength.
         """
-        return random.randint(0, self.defense)
+        return randint(0, self.defense)
 
 class Arena:
     def __init__(self):
