@@ -21,8 +21,8 @@ class Ability:
 
 class Hero:
     def make_stats(self):
-        print(self.kills)
-        print(self.deaths)
+        print("Hero Kills: {}".format(self.kills))
+        print("Hero Death: {}".format(self.deaths))
 
         if self.deaths > 0:
             print(int(self.kills) // int(self.deaths))
@@ -30,7 +30,7 @@ class Hero:
         else:
             print(int(self.kills))
 
-    def __init__(self, name, health=100): cccccccccccccccc
+    def __init__(self, name, health=100):
         self.abilities = list()
         self.name = name
         self.armors = list()
@@ -99,8 +99,8 @@ class Hero:
 class Weapon(Ability):
     
     def attack(self):
-        lowest = 0
-        highest = self.attack_strength
+        lowest = int(self.attack_strength) // 2
+        highest = int(self.attack_strength)
         attack_val = randint(lowest, highest)
         # Return attack value between 0 and the full attack.
         return attack_val
@@ -227,7 +227,7 @@ class Armor:
         Return a random value between 0 and the 
         initialized defend strength.
         """
-        return randint(0, self.defense)
+        return randint(0, int(self.defense))
 
 class Arena:
     def __init__(self):
@@ -484,6 +484,6 @@ if __name__ == "__main__":
             game_is_running = False
 
         else:
-            
+            #Revive heroes to play again
             arena.team_one.revive_heroes()
             arena.team_two.revive_heroes()
