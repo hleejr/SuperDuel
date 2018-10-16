@@ -20,16 +20,7 @@ class Ability:
         self.attack_strength = attack_strength
 
 class Hero:
-    def make_stats(self):
-        print("Hero Kills: {}".format(self.kills))
-        print("Hero Death: {}".format(self.deaths))
-
-        if self.deaths > 0:
-            print(int(self.kills) // int(self.deaths))
-
-        else:
-            print(int(self.kills))
-
+    
     def __init__(self, name, health=100):
         self.abilities = list()
         self.name = name
@@ -39,6 +30,16 @@ class Hero:
         self.deaths = 0
         self.kills = 0
         self.weapons = list()
+
+    def make_stats(self):
+        print("Hero Kills: {}".format(self.kills))
+        print("Hero Death: {}".format(self.deaths))
+
+        if self.deaths > 0:
+            print(int(self.kills) // int(self.deaths))
+
+        else:
+            print(int(self.kills))
 
     def defend(self):
         """
@@ -111,6 +112,7 @@ class Team():
         #Instantiate resources."""
         self.name = team_name
         self.heroes = list()
+        self.team_kills = 0
 
     def add_hero(self, hero):
         #"""Add Hero object to heroes list."""
@@ -154,11 +156,10 @@ class Team():
             team_attack += hero.attack()
         
         kills = other_team.defend(team_attack)
+        self.team_kills += kills
 
         for hero in self.heroes:
             hero.add_kill(kills)
-
-
 
     def defend(self, damage_amt):
         """
@@ -175,19 +176,20 @@ class Team():
             remainder = damage_amt - team_defense
             
             return self.deal_damage(remainder)
-            
+        return 0
     def deal_damage(self, damage):
         """
         Divide the total damage amongst all heroes.
         Return the number of heros that died in attack.
         """
         dam_per_hero = damage//len(self.heroes)
-        kills = 0
+        deaths = 0
 
         for hero in self.heroes:
-            kills += hero.take_damage(dam_per_hero)
+            deaths += hero.take_damage(dam_per_hero)
 
-        return kills
+        print("total team deaths{}".format(deaths))
+        return deaths
 
     def revive_heroes(self, health=100):
         """
@@ -214,8 +216,10 @@ class Team():
         """
         This method should update each hero when there is a team kill.
         """
+        team_kills = 0
         for hero in self.heroes:
-            hero.add_kill()
+            team_kills += hero.kills
+        return team_kills
 class Armor:
     def __init__(self, name, defense):
         """Instantiate name and defense strength."""
@@ -464,6 +468,8 @@ class Arena:
         self.team_two.stats()
 
 if __name__ == "__main__":
+
+
     game_is_running = True
 
     # Instantiate Game Arena
